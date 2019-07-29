@@ -51,9 +51,9 @@ import java.lang.reflect.Method;
 /**
  * Glue class between CordovaWebView (main Cordova logic) and SystemWebView (the actual View).
  * We make the Engine separate from the actual View so that:
- *  A) We don't need to worry about WebView methods clashing with CordovaWebViewEngine methods
- *     (e.g.: goBack() is void for WebView, and boolean for CordovaWebViewEngine)
- *  B) Separating the actual View from the Engine makes API surfaces smaller.
+ * A) We don't need to worry about WebView methods clashing with CordovaWebViewEngine methods
+ * (e.g.: goBack() is void for WebView, and boolean for CordovaWebViewEngine)
+ * B) Separating the actual View from the Engine makes API surfaces smaller.
  * Class uses two-phase initialization. However, CordovaWebView is responsible for calling .init().
  */
 public class SystemWebViewEngine implements CordovaWebViewEngine {
@@ -71,7 +71,9 @@ public class SystemWebViewEngine implements CordovaWebViewEngine {
     protected NativeToJsMessageQueue nativeToJsMessageQueue;
     private BroadcastReceiver receiver;
 
-    /** Used when created via reflection. */
+    /**
+     * Used when created via reflection.
+     */
     public SystemWebViewEngine(Context context, CordovaPreferences preferences) {
         this(new SystemWebView(context), preferences);
     }
@@ -88,8 +90,8 @@ public class SystemWebViewEngine implements CordovaWebViewEngine {
 
     @Override
     public void init(CordovaWebView parentWebView, CordovaInterface cordova, CordovaWebViewEngine.Client client,
-              CordovaResourceApi resourceApi, PluginManager pluginManager,
-              NativeToJsMessageQueue nativeToJsMessageQueue) {
+                     CordovaResourceApi resourceApi, PluginManager pluginManager,
+                     NativeToJsMessageQueue nativeToJsMessageQueue) {
         if (this.cordova != null) {
             throw new IllegalStateException();
         }
@@ -112,10 +114,11 @@ public class SystemWebViewEngine implements CordovaWebViewEngine {
             public void setNetworkAvailable(boolean value) {
                 //sometimes this can be called after calling webview.destroy() on destroy()
                 //thus resulting in a NullPointerException
-                if(webView!=null) {
-                   webView.setNetworkAvailable(value); 
+                if (webView != null) {
+                    webView.setNetworkAvailable(value);
                 }
             }
+
             @Override
             public void runOnUiThread(Runnable r) {
                 SystemWebViewEngine.this.cordova.getActivity().runOnUiThread(r);

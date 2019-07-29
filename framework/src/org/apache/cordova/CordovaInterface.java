@@ -38,20 +38,20 @@ public interface CordovaInterface {
      *
      * @param command     The command object
      * @param intent      The intent to start
-     * @param requestCode   The request code that is passed to callback to identify the activity
+     * @param requestCode The request code that is passed to callback to identify the activity
      */
     abstract public void startActivityForResult(CordovaPlugin command, Intent intent, int requestCode);
 
     /**
      * Set the plugin to be called when a sub-activity exits.
      *
-     * @param plugin      The plugin on which onActivityResult is to be called
+     * @param plugin The plugin on which onActivityResult is to be called
      */
     abstract public void setActivityResultCallback(CordovaPlugin plugin);
 
     /**
      * Get the Android activity.
-     *
+     * <p>
      * If a custom engine lives outside of the Activity's lifecycle the return value may be null.
      *
      * @return the Activity
@@ -68,12 +68,12 @@ public interface CordovaInterface {
     /**
      * Called when a message is sent to plugin.
      *
-     * @param id            The message id
-     * @param data          The message data
-     * @return              Object or null
+     * @param id   The message id
+     * @param data The message data
+     * @return Object or null
      */
     public Object onMessage(String id, Object data);
-    
+
     /**
      * Returns a shared thread pool that can be used for background tasks.
      */
@@ -87,7 +87,7 @@ public interface CordovaInterface {
     /**
      * Sends a permission request to the activity for a group of permissions
      */
-    public void requestPermissions(CordovaPlugin plugin, int requestCode, String [] permissions);
+    public void requestPermissions(CordovaPlugin plugin, int requestCode, String[] permissions);
 
     /**
      * Check for a permission.  Returns true if the permission is granted, false otherwise.

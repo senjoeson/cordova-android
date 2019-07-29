@@ -48,7 +48,7 @@ import java.util.Hashtable;
 /**
  * This class is the WebViewClient that implements callbacks for our web view.
  * The kind of callbacks that happen here are regarding the rendering of the
- * document instead of the chrome surrounding it, such as onPageStarted(), 
+ * document instead of the chrome surrounding it, such as onPageStarted(),
  * shouldOverrideUrlLoading(), etc. Related to but different than
  * CordovaChromeClient.
  */
@@ -59,7 +59,9 @@ public class SystemWebViewClient extends WebViewClient {
     private boolean doClearHistory = false;
     boolean isCurrentlyLoading;
 
-    /** The authorization tokens. */
+    /**
+     * The authorization tokens.
+     */
     private Hashtable<String, AuthenticationToken> authenticationTokens = new Hashtable<String, AuthenticationToken>();
 
     public SystemWebViewClient(SystemWebViewEngine parentEngine) {
@@ -70,9 +72,9 @@ public class SystemWebViewClient extends WebViewClient {
      * Give the host application a chance to take over the control when a new url
      * is about to be loaded in the current WebView.
      *
-     * @param view          The WebView that is initiating the callback.
-     * @param url           The url to be loaded.
-     * @return              true to override, false for default behavior
+     * @param view The WebView that is initiating the callback.
+     * @param url  The url to be loaded.
+     * @return true to override, false for default behavior
      */
     @Override
     @SuppressWarnings("deprecation")
@@ -104,7 +106,7 @@ public class SystemWebViewClient extends WebViewClient {
         // By default handle 401 like we'd normally do!
         super.onReceivedHttpAuthRequest(view, handler, host, realm);
     }
-    
+
     /**
      * On received client cert request.
      * The method forwards the request to any running plugins before using the default implementation.
@@ -114,8 +116,7 @@ public class SystemWebViewClient extends WebViewClient {
      */
     @Override
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public void onReceivedClientCertRequest (WebView view, ClientCertRequest request)
-    {
+    public void onReceivedClientCertRequest(WebView view, ClientCertRequest request) {
 
         // Check if there is some plugin which can resolve this certificate request
         PluginManager pluginManager = this.parentEngine.pluginManager;
@@ -134,8 +135,8 @@ public class SystemWebViewClient extends WebViewClient {
      * one time for the main frame. This also means that onPageStarted will not be called when the contents of an
      * embedded frame changes, i.e. clicking a link whose target is an iframe.
      *
-     * @param view          The webview initiating the callback.
-     * @param url           The url of the page.
+     * @param view The webview initiating the callback.
+     * @param url  The url of the page.
      */
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
@@ -150,9 +151,8 @@ public class SystemWebViewClient extends WebViewClient {
      * Notify the host application that a page has finished loading.
      * This method is called only for main frame. When onPageFinished() is called, the rendering picture may not be updated yet.
      *
-     *
-     * @param view          The webview initiating the callback.
-     * @param url           The url of the page.
+     * @param view The webview initiating the callback.
+     * @param url  The url of the page.
      */
     @Override
     public void onPageFinished(WebView view, String url) {
@@ -181,10 +181,10 @@ public class SystemWebViewClient extends WebViewClient {
      * Report an error to the host application. These errors are unrecoverable (i.e. the main resource is unavailable).
      * The errorCode parameter corresponds to one of the ERROR_* constants.
      *
-     * @param view          The WebView that is initiating the callback.
-     * @param errorCode     The error code corresponding to an ERROR_* value.
-     * @param description   A String describing the error.
-     * @param failingUrl    The url that failed to load.
+     * @param view        The WebView that is initiating the callback.
+     * @param errorCode   The error code corresponding to an ERROR_* value.
+     * @param description A String describing the error.
+     * @param failingUrl  The url that failed to load.
      */
     @Override
     @SuppressWarnings("deprecation")
@@ -217,9 +217,9 @@ public class SystemWebViewClient extends WebViewClient {
      * Note that the decision may be retained for use in response to future SSL errors.
      * The default behavior is to cancel the load.
      *
-     * @param view          The WebView that is initiating the callback.
-     * @param handler       An SslErrorHandler object that will handle the user's response.
-     * @param error         The SSL error object.
+     * @param view    The WebView that is initiating the callback.
+     * @param handler An SslErrorHandler object that will handle the user's response.
+     * @param error   The SSL error object.
      */
     @Override
     public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
@@ -267,7 +267,6 @@ public class SystemWebViewClient extends WebViewClient {
      *
      * @param host
      * @param realm
-     *
      * @return the authentication token or null if did not exist
      */
     public AuthenticationToken removeAuthenticationToken(String host, String realm) {
@@ -276,7 +275,7 @@ public class SystemWebViewClient extends WebViewClient {
 
     /**
      * Gets the authentication token.
-     *
+     * <p>
      * In order it tries:
      * 1- host + realm
      * 2- host
@@ -285,7 +284,6 @@ public class SystemWebViewClient extends WebViewClient {
      *
      * @param host
      * @param realm
-     *
      * @return the authentication token
      */
     public AuthenticationToken getAuthenticationToken(String host, String realm) {

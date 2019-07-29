@@ -38,7 +38,7 @@ public class Whitelist {
         private String regexFromPattern(String pattern, boolean allowWildcards) {
             final String toReplace = "\\.[]{}()^$?+|";
             StringBuilder regex = new StringBuilder();
-            for (int i=0; i < pattern.length(); i++) {
+            for (int i = 0; i < pattern.length(); i++) {
                 char c = pattern.charAt(i);
                 if (c == '*' && allowWildcards) {
                     regex.append(".");
@@ -67,7 +67,7 @@ public class Whitelist {
                 if (port == null || "*".equals(port)) {
                     this.port = null;
                 } else {
-                    this.port = Integer.parseInt(port,10);
+                    this.port = Integer.parseInt(port, 10);
                 }
                 if (path == null || "/*".equals(path)) {
                     this.path = null;
@@ -118,15 +118,15 @@ public class Whitelist {
                 if (origin.compareTo("*") == 0) {
                     LOG.d(TAG, "Unlimited access to network resources");
                     whiteList = null;
-                }
-                else { // specific access
+                } else { // specific access
                     Pattern parts = Pattern.compile("^((\\*|[A-Za-z-]+):(//)?)?(\\*|((\\*\\.)?[^*/:]+))?(:(\\d+))?(/.*)?");
                     Matcher m = parts.matcher(origin);
                     if (m.matches()) {
                         String scheme = m.group(2);
                         String host = m.group(4);
                         // Special case for two urls which are allowed to have empty hosts
-                        if (("file".equals(scheme) || "content".equals(scheme)) && host == null) host = "*";
+                        if (("file".equals(scheme) || "content".equals(scheme)) && host == null)
+                            host = "*";
                         String port = m.group(8);
                         String path = m.group(9);
                         if (scheme == null) {

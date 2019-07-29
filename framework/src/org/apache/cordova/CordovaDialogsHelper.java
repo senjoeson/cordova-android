@@ -56,12 +56,10 @@ public class CordovaDialogsHelper {
         dlg.setOnKeyListener(new DialogInterface.OnKeyListener() {
             //DO NOTHING
             public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK)
-                {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
                     result.gotResult(true, null);
                     return false;
-                }
-                else
+                } else
                     return true;
             }
         });
@@ -94,12 +92,10 @@ public class CordovaDialogsHelper {
         dlg.setOnKeyListener(new DialogInterface.OnKeyListener() {
             //DO NOTHING
             public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK)
-                {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
                     result.gotResult(false, null);
                     return false;
-                }
-                else
+                } else
                     return true;
             }
         });
@@ -110,7 +106,7 @@ public class CordovaDialogsHelper {
      * Tell the client to display a prompt dialog to the user.
      * If the client returns true, WebView will assume that the client will
      * handle the prompt dialog and call the appropriate JsPromptResult method.
-     *
+     * <p>
      * Since we are hacking prompts for our own purposes, we should not be using them for
      * this purpose, perhaps we should hack console.log to do this instead!
      */
@@ -140,8 +136,8 @@ public class CordovaDialogsHelper {
         lastHandledDialog = dlg.show();
     }
 
-    public void destroyLastDialog(){
-        if (lastHandledDialog != null){
+    public void destroyLastDialog() {
+        if (lastHandledDialog != null) {
             lastHandledDialog.cancel();
         }
     }

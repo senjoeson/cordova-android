@@ -19,16 +19,16 @@
 
 package org.apache.cordova;
 
+import android.content.Context;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-
-import android.content.Context;
 
 public class ConfigXmlParser {
     private static String TAG = "ConfigXmlParser";
@@ -36,6 +36,7 @@ public class ConfigXmlParser {
     private String launchUrl = "file:///android_asset/www/index.html";
     private CordovaPreferences prefs = new CordovaPreferences();
     private ArrayList<PluginEntry> pluginEntries = new ArrayList<PluginEntry>(20);
+    static ConfigXmlParser parser = new ConfigXmlParser();
 
     public CordovaPreferences getPreferences() {
         return prefs;
@@ -73,9 +74,7 @@ public class ConfigXmlParser {
         while (eventType != XmlPullParser.END_DOCUMENT) {
             if (eventType == XmlPullParser.START_TAG) {
                 handleStartTag(xml);
-            }
-            else if (eventType == XmlPullParser.END_TAG)
-            {
+            } else if (eventType == XmlPullParser.END_TAG) {
                 handleEndTag(xml);
             }
             try {
@@ -95,22 +94,19 @@ public class ConfigXmlParser {
             //Set the bit for reading params
             insideFeature = true;
             service = xml.getAttributeValue(null, "name");
-        }
-        else if (insideFeature && strNode.equals("param")) {
+        } else if (insideFeature && strNode.equals("param")) {
             paramType = xml.getAttributeValue(null, "name");
             if (paramType.equals("service")) // check if it is using the older service param
                 service = xml.getAttributeValue(null, "value");
             else if (paramType.equals("package") || paramType.equals("android-package"))
-                pluginClass = xml.getAttributeValue(null,"value");
+                pluginClass = xml.getAttributeValue(null, "value");
             else if (paramType.equals("onload"))
                 onload = "true".equals(xml.getAttributeValue(null, "value"));
-        }
-        else if (strNode.equals("preference")) {
+        } else if (strNode.equals("preference")) {
             String name = xml.getAttributeValue(null, "name").toLowerCase(Locale.ENGLISH);
             String value = xml.getAttributeValue(null, "value");
             prefs.set(name, value);
-        }
-        else if (strNode.equals("content")) {
+        } else if (strNode.equals("content")) {
             String src = xml.getAttributeValue(null, "src");
             if (src != null) {
                 setStartUrl(src);

@@ -118,7 +118,7 @@ public class NativeToJsMessageQueue {
     private void packMessage(JsMessage message, StringBuilder sb) {
         int len = message.calculateEncodedLength();
         sb.append(len)
-          .append(' ');
+                .append(' ');
         message.encodeAsMessage(sb);
     }
 
@@ -269,17 +269,26 @@ public class NativeToJsMessageQueue {
 
     public static abstract class BridgeMode {
         public abstract void onNativeToJsMessageAvailable(NativeToJsMessageQueue queue);
-        public void notifyOfFlush(NativeToJsMessageQueue queue, boolean fromOnlineEvent) {}
-        public void reset() {}
-    }
 
-    /** Uses JS polls for messages on a timer.. */
-    public static class NoOpBridgeMode extends BridgeMode {
-        @Override public void onNativeToJsMessageAvailable(NativeToJsMessageQueue queue) {
+        public void notifyOfFlush(NativeToJsMessageQueue queue, boolean fromOnlineEvent) {
+        }
+
+        public void reset() {
         }
     }
 
-    /** Uses webView.loadUrl("javascript:") to execute messages. */
+    /**
+     * Uses JS polls for messages on a timer..
+     */
+    public static class NoOpBridgeMode extends BridgeMode {
+        @Override
+        public void onNativeToJsMessageAvailable(NativeToJsMessageQueue queue) {
+        }
+    }
+
+    /**
+     * Uses webView.loadUrl("javascript:") to execute messages.
+     */
     public static class LoadUrlBridgeMode extends BridgeMode {
         private final CordovaWebViewEngine engine;
         private final CordovaInterface cordova;
@@ -302,7 +311,9 @@ public class NativeToJsMessageQueue {
         }
     }
 
-    /** Uses online/offline events to tell the JS when to poll for messages. */
+    /**
+     * Uses online/offline events to tell the JS when to poll for messages.
+     */
     public static class OnlineEventsBridgeMode extends BridgeMode {
         private final OnlineEventsBridgeModeDelegate delegate;
         private boolean online;
@@ -310,6 +321,7 @@ public class NativeToJsMessageQueue {
 
         public interface OnlineEventsBridgeModeDelegate {
             void setNetworkAvailable(boolean value);
+
             void runOnUiThread(Runnable r);
         }
 
@@ -340,6 +352,7 @@ public class NativeToJsMessageQueue {
                 }
             });
         }
+
         // Track when online/offline events are fired so that we don't fire excess events.
         @Override
         public void notifyOfFlush(final NativeToJsMessageQueue queue, boolean fromOnlineEvent) {
@@ -349,7 +362,9 @@ public class NativeToJsMessageQueue {
         }
     }
 
-    /** Uses webView.evaluateJavascript to execute messages. */
+    /**
+     * Uses webView.evaluateJavascript to execute messages.
+     */
     public static class EvalBridgeMode extends BridgeMode {
         private final CordovaWebViewEngine engine;
         private final CordovaInterface cordova;
@@ -373,10 +388,10 @@ public class NativeToJsMessageQueue {
     }
 
 
-
     private static class JsMessage {
         final String jsPayloadOrCallbackId;
         final PluginResult pluginResult;
+
         JsMessage(String js) {
             if (js == null) {
                 throw new NullPointerException();
@@ -384,6 +399,7 @@ public class NativeToJsMessageQueue {
             jsPayloadOrCallbackId = js;
             pluginResult = null;
         }
+
         JsMessage(PluginResult pluginResult, String callbackId) {
             if (callbackId == null || pluginResult == null) {
                 throw new NullPointerException();
@@ -426,7 +442,7 @@ public class NativeToJsMessageQueue {
             int statusLen = String.valueOf(pluginResult.getStatus()).length();
             int ret = 2 + statusLen + 1 + jsPayloadOrCallbackId.length() + 1;
             return ret + calculateEncodedLengthHelper(pluginResult);
-            }
+        }
 
         static void encodeAsMessageHelper(StringBuilder sb, PluginResult pluginResult) {
             switch (pluginResult.getMessageType()) {
@@ -438,7 +454,7 @@ public class NativeToJsMessageQueue {
                     break;
                 case PluginResult.MESSAGE_TYPE_NUMBER: // n
                     sb.append('n')
-                      .append(pluginResult.getMessage());
+                            .append(pluginResult.getMessage());
                     break;
                 case PluginResult.MESSAGE_TYPE_STRING: // s
                     sb.append('s');
@@ -470,7 +486,7 @@ public class NativeToJsMessageQueue {
         void encodeAsMessage(StringBuilder sb) {
             if (pluginResult == null) {
                 sb.append('J')
-                  .append(jsPayloadOrCallbackId);
+                        .append(jsPayloadOrCallbackId);
                 return;
             }
             int status = pluginResult.getStatus();
@@ -479,11 +495,11 @@ public class NativeToJsMessageQueue {
             boolean keepCallback = pluginResult.getKeepCallback();
 
             sb.append((noResult || resultOk) ? 'S' : 'F')
-              .append(keepCallback ? '1' : '0')
-              .append(status)
-              .append(' ')
-              .append(jsPayloadOrCallbackId)
-              .append(' ');
+                    .append(keepCallback ? '1' : '0')
+                    .append(status)
+                    .append(' ')
+                    .append(jsPayloadOrCallbackId)
+                    .append(' ');
 
             encodeAsMessageHelper(sb, pluginResult);
         }
@@ -492,11 +508,11 @@ public class NativeToJsMessageQueue {
             switch (pluginResult.getMessageType()) {
                 case PluginResult.MESSAGE_TYPE_MULTIPART:
                     int size = pluginResult.getMultipartMessagesSize();
-                    for (int i=0; i<size; i++) {
+                    for (int i = 0; i < size; i++) {
                         PluginResult subresult = pluginResult.getMultipartMessage(i);
                         JsMessage submessage = new JsMessage(subresult, jsPayloadOrCallbackId);
                         submessage.buildJsMessage(sb);
-                        if (i < (size-1)) {
+                        if (i < (size - 1)) {
                             sb.append(",");
                         }
                     }

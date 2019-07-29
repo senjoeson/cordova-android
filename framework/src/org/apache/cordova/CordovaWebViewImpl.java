@@ -66,7 +66,9 @@ public class CordovaWebViewImpl implements CordovaWebView {
     // The URL passed to loadUrl(), not necessarily the URL of the current page.
     String loadedUrl;
 
-    /** custom view created by the browser (a video player for example) */
+    /**
+     * custom view created by the browser (a video player for example)
+     */
     private View mCustomView;
     private WebChromeClient.CustomViewCallback mCustomViewCallback;
 
@@ -315,26 +317,32 @@ public class CordovaWebViewImpl implements CordovaWebView {
     public PluginManager getPluginManager() {
         return pluginManager;
     }
+
     @Override
     public CordovaPreferences getPreferences() {
         return preferences;
     }
+
     @Override
     public ICordovaCookieManager getCookieManager() {
         return engine.getCookieManager();
     }
+
     @Override
     public CordovaResourceApi getResourceApi() {
         return resourceApi;
     }
+
     @Override
     public CordovaWebViewEngine getEngine() {
         return engine;
     }
+
     @Override
     public View getView() {
         return engine.getView();
     }
+
     @Override
     public Context getContext() {
         return engine.getView().getContext();
@@ -342,7 +350,7 @@ public class CordovaWebViewImpl implements CordovaWebView {
 
     private void sendJavascriptEvent(String event) {
         if (appPlugin == null) {
-            appPlugin = (CoreAndroid)pluginManager.getPlugin(CoreAndroid.PLUGIN_NAME);
+            appPlugin = (CoreAndroid) pluginManager.getPlugin(CoreAndroid.PLUGIN_NAME);
         }
 
         if (appPlugin == null) {
@@ -426,6 +434,7 @@ public class CordovaWebViewImpl implements CordovaWebView {
             this.pluginManager.onNewIntent(intent);
         }
     }
+
     @Override
     public void handlePause(boolean keepRunning) {
         if (!isInitialized()) {
@@ -441,6 +450,7 @@ public class CordovaWebViewImpl implements CordovaWebView {
             engine.setPaused(true);
         }
     }
+
     @Override
     public void handleResume(boolean keepRunning) {
         if (!isInitialized()) {
@@ -458,6 +468,7 @@ public class CordovaWebViewImpl implements CordovaWebView {
             sendJavascriptEvent("resume");
         }
     }
+
     @Override
     public void handleStart() {
         if (!isInitialized()) {
@@ -465,6 +476,7 @@ public class CordovaWebViewImpl implements CordovaWebView {
         }
         pluginManager.onStart();
     }
+
     @Override
     public void handleStop() {
         if (!isInitialized()) {
@@ -472,6 +484,7 @@ public class CordovaWebViewImpl implements CordovaWebView {
         }
         pluginManager.onStop();
     }
+
     @Override
     public void handleDestroy() {
         if (!isInitialized()) {
