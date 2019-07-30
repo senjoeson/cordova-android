@@ -19,15 +19,15 @@
 
 package org.apache.cordova;
 
+import android.os.Bundle;
+
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import org.apache.cordova.LOG;
-
-import android.app.Activity;
-import android.os.Bundle;
-
+/**
+ * 插件属性配置项
+ */
 public class CordovaPreferences {
     private HashMap<String, String> prefs = new HashMap<String, String>(20);
     private Bundle preferencesBundleExtras;
@@ -41,15 +41,15 @@ public class CordovaPreferences {
     }
 
     public void set(String name, boolean value) {
-        set(name, "" + value);
+        set(name, String.format("%s", value));
     }
 
     public void set(String name, int value) {
-        set(name, "" + value);
+        set(name, String.format("%d", value));
     }
 
     public void set(String name, double value) {
-        set(name, "" + value);
+        set(name, String.format("%s", value));
     }
 
     public Map<String, String> getAll() {

@@ -21,9 +21,9 @@ package org.apache.cordova;
 import android.webkit.HttpAuthHandler;
 
 /**
- * Specifies interface for HTTP auth handler object which is used to handle auth requests and
- * specifying user credentials.
- */
+   *指定HTTP auth处理程序对象的接口，该对象用于处理身份验证请求和
+   *指定用户凭据。
+  */
 public class CordovaHttpAuthHandler implements ICordovaHttpAuthHandler {
 
     private final HttpAuthHandler handler;

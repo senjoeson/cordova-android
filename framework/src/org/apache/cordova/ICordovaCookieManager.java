@@ -19,6 +19,9 @@
 
 package org.apache.cordova;
 
+/**
+ * 缓存管理
+ */
 public interface ICordovaCookieManager {
 
     public void setCookiesEnabled(boolean accept);
@@ -30,4 +33,4 @@ public interface ICordovaCookieManager {
     public void clearCookies();
 
     public void flush();
-};
+}

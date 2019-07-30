@@ -18,16 +18,17 @@
 */
 package org.apache.cordova;
 
+import android.net.Uri;
+
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.cordova.LOG;
-
-import android.net.Uri;
-
+/**
+ * 白名单列表
+ */
 public class Whitelist {
     private static class URLPattern {
         public Pattern scheme;

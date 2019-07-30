@@ -46,11 +46,11 @@ import java.util.Hashtable;
 
 
 /**
- * This class is the WebViewClient that implements callbacks for our web view.
- * The kind of callbacks that happen here are regarding the rendering of the
- * document instead of the chrome surrounding it, such as onPageStarted(),
- * shouldOverrideUrlLoading(), etc. Related to but different than
- * CordovaChromeClient.
+   *此类是WebViewClient，它实现Web视图的回调。
+   *这里发生的回调类型是关于渲染的
+   *文件而不是围绕它的chrome，例如onPageStarted（），
+   * shouldOverrideUrlLoading（）等相关但不同于
+   * CordovaChromeClient.
  */
 public class SystemWebViewClient extends WebViewClient {
 

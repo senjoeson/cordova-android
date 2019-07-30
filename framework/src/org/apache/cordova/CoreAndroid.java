@@ -19,10 +19,6 @@
 
 package org.apache.cordova;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -30,12 +26,16 @@ import android.content.IntentFilter;
 import android.telephony.TelephonyManager;
 import android.view.KeyEvent;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.reflect.Field;
 import java.util.HashMap;
 
 /**
- * This class exposes methods in Cordova that can be called from JavaScript.
- */
+   *此类公开Cordova中可以从JavaScript调用的方法。
+  */
 public class CoreAndroid extends CordovaPlugin {
 
     public static final String PLUGIN_NAME = "CoreAndroid";

@@ -18,16 +18,16 @@
  */
 package org.apache.cordova;
 
-import java.util.Collection;
-import java.util.LinkedHashMap;
-
-import org.json.JSONException;
-
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Debug;
+
+import org.json.JSONException;
+
+import java.util.Collection;
+import java.util.LinkedHashMap;
 
 /**
  * PluginManager is exposed to JavaScript in the Cordova WebView.
@@ -43,14 +43,14 @@ public class PluginManager {
     private final LinkedHashMap<String, CordovaPlugin> pluginMap = new LinkedHashMap<String, CordovaPlugin>();
     private final LinkedHashMap<String, PluginEntry> entryMap = new LinkedHashMap<String, PluginEntry>();
 
-    private final CordovaInterface ctx;
+    private final CordovaInterface cordova;
     private final CordovaWebView app;
     private boolean isInitialized;
 
     private CordovaPlugin permissionRequester;
 
     public PluginManager(CordovaWebView cordovaWebView, CordovaInterface cordova, Collection<PluginEntry> pluginEntries) {
-        this.ctx = cordova;
+        this.cordova = cordova;
         this.app = cordovaWebView;
         setPluginEntries(pluginEntries);
     }
@@ -87,13 +87,13 @@ public class PluginManager {
     }
 
     /**
-     * Create plugins objects that have onload set.
+     * Create plugins objects that have onLoad set.
      */
     private void startupPlugins() {
         for (PluginEntry entry : entryMap.values()) {
             // Add a null entry to for each non-startup plugin to avoid ConcurrentModificationException
             // When iterating plugins.
-            if (entry.onload) {
+            if (entry.onLoad) {
                 getPlugin(entry.service);
             } else {
                 pluginMap.put(entry.service, null);
@@ -168,7 +168,7 @@ public class PluginManager {
             } else {
                 ret = instantiatePlugin(pe.pluginClass);
             }
-            ret.privateInitialize(service, ctx, app, app.getPreferences());
+            ret.privateInitialize(service, cordova, app, app.getPreferences());
             pluginMap.put(service, ret);
         }
         return ret;
@@ -195,7 +195,7 @@ public class PluginManager {
     public void addService(PluginEntry entry) {
         this.entryMap.put(entry.service, entry);
         if (entry.plugin != null) {
-            entry.plugin.privateInitialize(entry.service, ctx, app, app.getPreferences());
+            entry.plugin.privateInitialize(entry.service, cordova, app, app.getPreferences());
             pluginMap.put(entry.service, entry.plugin);
         }
     }
@@ -311,7 +311,7 @@ public class PluginManager {
                 }
             }
         }
-        return ctx.onMessage(id, data);
+        return cordova.onMessage(id, data);
     }
 
     /**

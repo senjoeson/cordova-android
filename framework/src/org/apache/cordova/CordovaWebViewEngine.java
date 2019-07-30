@@ -23,10 +23,10 @@ import android.view.View;
 import android.webkit.ValueCallback;
 
 /**
- * Interface for all Cordova engines.
- * No methods will be added to this class (in order to be compatible with existing engines).
- * Instead, we will create a new interface: e.g. CordovaWebViewEngineV2
- */
+   *所有Cordova引擎的接口。
+   *此类不会添加任何方法（为了与现有引擎兼容）。
+   *相反，我们将创建一个新界面：例如CordovaWebViewEngineV2
+  */
 public interface CordovaWebViewEngine {
     void init(CordovaWebView parentWebView, CordovaInterface cordova, Client client,
               CordovaResourceApi resourceApi, PluginManager pluginManager,

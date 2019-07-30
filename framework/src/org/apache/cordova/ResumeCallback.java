@@ -31,7 +31,7 @@ public class ResumeCallback extends CallbackContext {
     private PluginManager pluginManager;
 
     public ResumeCallback(String serviceName, PluginManager pluginManager) {
-        super("resumecallback", null);
+        super(ResumeCallback.class.getSimpleName(), null);
         this.serviceName = serviceName;
         this.pluginManager = pluginManager;
     }

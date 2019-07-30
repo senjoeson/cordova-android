@@ -26,6 +26,7 @@ import android.widget.EditText;
 
 /**
  * Helper class for WebViews to implement prompt(), alert(), confirm() dialogs.
+ * 协助webview实现dialog
  */
 public class CordovaDialogsHelper {
     private final Context context;

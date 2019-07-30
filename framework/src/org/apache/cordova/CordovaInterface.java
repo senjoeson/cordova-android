@@ -22,14 +22,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
-import org.apache.cordova.CordovaPlugin;
-
 import java.util.concurrent.ExecutorService;
 
 /**
- * The Activity interface that is implemented by CordovaActivity.
- * It is used to isolate plugin development, and remove dependency on entire Cordova library.
- */
+   * CordovaActivity实现的Activity接口。
+   *它用于隔离插件开发，并删除对整个Cordova库的依赖。
+  */
 public interface CordovaInterface {
 
     /**

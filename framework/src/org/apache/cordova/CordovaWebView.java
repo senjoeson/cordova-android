@@ -16,20 +16,20 @@
 */
 package org.apache.cordova;
 
-import java.util.List;
-import java.util.Map;
-
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.webkit.WebChromeClient.CustomViewCallback;
 
+import java.util.List;
+import java.util.Map;
+
 /**
- * Main interface for interacting with a Cordova webview - implemented by CordovaWebViewImpl.
- * This is an interface so that it can be easily mocked in tests.
- * Methods may be added to this interface without a major version bump, as plugins & embedders
- * are not expected to implement it.
- */
+   *用于与Cordova webview交互的主界面 - 由CordovaWebViewImpl实现。
+   *这是一个界面，因此可以在测试中轻松模拟。
+   *方法可以作为插件和嵌入器添加到此接口而不会出现主要版本冲突
+   *预计不会实施它。
+  */
 public interface CordovaWebView {
     public static final String CORDOVA_VERSION = "8.1.0-dev";
 

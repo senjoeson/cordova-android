@@ -41,9 +41,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Main class for interacting with a Cordova webview. Manages plugins, events, and a CordovaWebViewEngine.
- * Class uses two-phase initialization. You must call init() before calling any other methods.
- */
+   *与Cordova webview交互的主要类。 管理插件，事件和CordovaWebViewEngine。
+   * Class使用两阶段初始化。 您必须在调用任何其他方法之前调用init（）。
+  */
 public class CordovaWebViewImpl implements CordovaWebView {
 
     public static final String TAG = "CordovaWebViewImpl";

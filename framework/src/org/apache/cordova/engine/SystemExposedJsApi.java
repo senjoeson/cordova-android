@@ -25,10 +25,10 @@ import org.apache.cordova.ExposedJsApi;
 import org.json.JSONException;
 
 /**
- * Contains APIs that the JS can call. All functions in here should also have
- * an equivalent entry in CordovaChromeClient.java, and be added to
- * cordova-js/lib/android/plugin/android/promptbasednativeapi.js
- */
+   *包含JS可以调用的API。 这里的所有功能也应该有
+   * CordovaChromeClient.java中的等效条目，并添加到
+   * cordova -js / lib / android / plugin / android / promptbasednativeapi.js
+  */
 class SystemExposedJsApi implements ExposedJsApi {
     private final CordovaBridge bridge;
 

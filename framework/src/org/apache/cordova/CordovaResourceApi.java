@@ -41,25 +41,23 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.channels.FileChannel;
 import java.util.Locale;
-
 /**
- * What this class provides:
- * 1. Helpers for reading & writing to URLs.
- * - E.g. handles assets, resources, content providers, files, data URIs, http[s]
- * - E.g. Can be used to query for mime-type & content length.
- * <p>
- * 2. To allow plugins to redirect URLs (via remapUrl).
- * - All plugins should call remapUrl() on URLs they receive from JS *before*
- * passing the URL onto other utility functions in this class.
- * - For an example usage of this, refer to the org.apache.cordova.file plugin.
- * <p>
- * Future Work:
- * - Consider using a Cursor to query content URLs for their size (like the file plugin does).
- * - Allow plugins to remapUri to "cdv-plugin://plugin-name/foo", which CordovaResourceApi
- * would then delegate to pluginManager.getPlugin(plugin-name).openForRead(url)
- * - Currently, plugins *can* do this by remapping to a data: URL, but it's inefficient
- * for large payloads.
- */
+   *本课程提供的内容：
+   * 1.用于读取和写入URL的助手。
+   *  - 例如 处理资产，资源，内容提供商，文件，数据URI，http [s]
+   *  - 例如 可用于查询mime类型和内容长度。
+   * <p>
+   * 2.允许插件重定向URL（通过remapUrl）。
+   *  - 所有插件应该在他们从JS *收到的URL之前调用remapUrl（）*
+   *将URL传递给此类中的其他实用程序函数。
+   *  - 有关此示例的用法，请参阅org.apache.cordova.file插件。
+   * <p>
+   * 未来的工作：
+   *  - 考虑使用Cursor查询内容URL的大小（就像文件插件一样）。
+   *  - 允许插件重新映射到“cdv-plugin：// plugin-name / foo”，其中CordovaResourceApi
+   *然后委托给pluginManager.getPlugin（plugin-name）.openForRead（url）
+   *  - 目前，插件*可以通过重新映射到数据：URL来实现这一点，用于大型有效载荷时,效率很低
+  */
 public class CordovaResourceApi {
     @SuppressWarnings("unused")
     private static final String LOG_TAG = "CordovaResourceApi";
@@ -224,10 +222,10 @@ public class CordovaResourceApi {
      * Opens a stream to the given URI, also providing the MIME type & length.
      *
      * @return Never returns null.
-     * @throws Throws an InvalidArgumentException for relative URIs. Relative URIs should be
+     * @throws Throwable an InvalidArgumentException for relative URIs. Relative URIs should be
      *                resolved before being passed into this function.
-     * @throws Throws an IOException if the URI cannot be opened.
-     * @throws Throws an IllegalStateException if called on a foreground thread.
+     * @throws Throwable an IOException if the URI cannot be opened.
+     * @throws Throwable an IllegalStateException if called on a foreground thread.
      */
     public OpenForReadResult openForRead(Uri uri) throws IOException {
         return openForRead(uri, false);
@@ -237,10 +235,10 @@ public class CordovaResourceApi {
      * Opens a stream to the given URI, also providing the MIME type & length.
      *
      * @return Never returns null.
-     * @throws Throws an InvalidArgumentException for relative URIs. Relative URIs should be
+     * @throws Throwable an InvalidArgumentException for relative URIs. Relative URIs should be
      *                resolved before being passed into this function.
-     * @throws Throws an IOException if the URI cannot be opened.
-     * @throws Throws an IllegalStateException if called on a foreground thread and skipThreadCheck is false.
+     * @throws Throwable an IOException if the URI cannot be opened.
+     * @throws Throwable an IllegalStateException if called on a foreground thread and skipThreadCheck is false.
      */
     public OpenForReadResult openForRead(Uri uri, boolean skipThreadCheck) throws IOException {
         if (!skipThreadCheck) {
@@ -317,9 +315,9 @@ public class CordovaResourceApi {
      * Opens a stream to the given URI.
      *
      * @return Never returns null.
-     * @throws Throws an InvalidArgumentException for relative URIs. Relative URIs should be
+     * @throws Throwable an InvalidArgumentException for relative URIs. Relative URIs should be
      *                resolved before being passed into this function.
-     * @throws Throws an IOException if the URI cannot be opened.
+     * @throws Throwable an IOException if the URI cannot be opened.
      */
     public OutputStream openOutputStream(Uri uri, boolean append) throws IOException {
         assertBackgroundThread();

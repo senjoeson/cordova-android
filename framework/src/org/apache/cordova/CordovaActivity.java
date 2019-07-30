@@ -19,7 +19,6 @@
 package org.apache.cordova;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,15 +26,17 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebViewClient;
-import android.widget.FrameLayout;
 
+import org.apache.cordova.fragment.BaseFragment;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -72,7 +73,7 @@ import java.util.Locale;
  * for the configuration. The use of the set*Property() methods is
  * deprecated in favor of the config.xml file.
  */
-public class CordovaActivity extends Activity {
+public class CordovaActivity extends FragmentActivity {
     public static String TAG = "CordovaActivity";
 
     // The webview for our app
@@ -91,9 +92,9 @@ public class CordovaActivity extends Activity {
     protected boolean immersiveMode;
 
     // Read from config.xml:
-    protected CordovaPreferences preferences;
-    protected String launchUrl;
-    protected ArrayList<PluginEntry> pluginEntries;
+    protected CordovaPreferences preferences = CordovaApplication.getPreferences();
+    protected String launchUrl = CordovaApplication.getLaunchUrl();
+    protected ArrayList<PluginEntry> pluginEntries = CordovaApplication.getPluginEntries();
     protected CordovaInterfaceImpl cordovaInterface;
 
     /**
@@ -101,9 +102,19 @@ public class CordovaActivity extends Activity {
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        // need to activate preferences before super.onCreate to avoid "requestFeature() must be called before adding content" exception
-        loadConfig();
+        initPrefs();  // 就放在全局
 
+        super.onCreate(savedInstanceState);
+
+        cordovaInterface = new CordovaInterfaceImpl(this);
+        cordovaInterface.setCordovaMessage(this::onMessage);
+        if (savedInstanceState != null) {
+            cordovaInterface.restoreInstanceState(savedInstanceState);
+        }
+    }
+
+    private void initPrefs() {
+        // need to activate preferences before super.onCreate to avoid "requestFeature() must be called before adding content" exception
         String logLevel = preferences.getString("loglevel", "ERROR");
         LOG.setLogLevel(logLevel);
 
@@ -131,14 +142,8 @@ public class CordovaActivity extends Activity {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
         }
-
-        super.onCreate(savedInstanceState);
-
-        cordovaInterface = makeCordovaInterface();
-        if (savedInstanceState != null) {
-            cordovaInterface.restoreInstanceState(savedInstanceState);
-        }
     }
+
 
     protected void init() {
         appView = makeWebView();
@@ -155,26 +160,21 @@ public class CordovaActivity extends Activity {
         }
     }
 
-    @SuppressWarnings("deprecation")
-    protected void loadConfig() {
-        ConfigXmlParser parser = new ConfigXmlParser();
-        parser.parse(this);
-        preferences = parser.getPreferences();
-        preferences.setPreferencesBundle(getIntent().getExtras());
-        launchUrl = parser.getLaunchUrl();
-        pluginEntries = parser.getPluginEntries();
-    }
 
     //Suppressing warnings in AndroidStudio
     @SuppressWarnings({"deprecation", "ResourceType"})
     protected void createViews() {
         //Why are we setting a constant as the ID? This should be investigated
-        appView.getView().setId(100);
+      /*  appView.getView().setId(100);
         appView.getView().setLayoutParams(new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT));
+                ViewGroup.LayoutParams.MATCH_PARENT));*/
+        setContentView(R.layout.activity_main);
+        FragmentManager supportFragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.id_container, new BaseFragment());
+        fragmentTransaction.commit();
 
-        setContentView(appView.getView());
 
         if (preferences.contains("BackgroundColor")) {
             try {
@@ -202,15 +202,6 @@ public class CordovaActivity extends Activity {
         return CordovaWebViewImpl.createEngine(this, preferences);
     }
 
-    protected CordovaInterfaceImpl makeCordovaInterface() {
-        return new CordovaInterfaceImpl(this) {
-            @Override
-            public Object onMessage(String id, Object data) {
-                // Plumb this to CordovaActivity.onMessage for backwards compatibility
-                return CordovaActivity.this.onMessage(id, data);
-            }
-        };
-    }
 
     /**
      * Load the url into the webview.
@@ -454,6 +445,7 @@ public class CordovaActivity extends Activity {
      * @param data The message data
      * @return Object or null
      */
+
     public Object onMessage(String id, Object data) {
         if ("onReceivedError".equals(id)) {
             JSONObject d = (JSONObject) data;
@@ -498,8 +490,7 @@ public class CordovaActivity extends Activity {
      * @param grantResults
      */
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[],
-                                           int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         try {
             cordovaInterface.onRequestPermissionResult(requestCode, permissions, grantResults);
         } catch (JSONException e) {

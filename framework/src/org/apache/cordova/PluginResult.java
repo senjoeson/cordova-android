@@ -18,13 +18,16 @@
 */
 package org.apache.cordova;
 
-import java.util.List;
+import android.util.Base64;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.util.Base64;
+import java.util.List;
 
+/**
+ * 插件结果实体类
+ */
 public class PluginResult {
     private final int status;
     private final int messageType;

@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Pair;
 
 import org.json.JSONException;
@@ -35,7 +36,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * Default implementation of CordovaInterface.
+ * 默认实现CordovaInterface
  */
 public class CordovaInterfaceImpl implements CordovaInterface {
     private static final String TAG = "CordovaInterfaceImpl";
@@ -54,6 +55,11 @@ public class CordovaInterfaceImpl implements CordovaInterface {
     public CordovaInterfaceImpl(Activity activity) {
         this(activity, Executors.newCachedThreadPool());
     }
+
+    public CordovaInterfaceImpl(Fragment fragment) {
+        this(fragment.getActivity(), Executors.newCachedThreadPool());
+    }
+
 
     public CordovaInterfaceImpl(Activity activity, ExecutorService threadPool) {
         this.activity = activity;
@@ -95,9 +101,14 @@ public class CordovaInterfaceImpl implements CordovaInterface {
     public Object onMessage(String id, Object data) {
         if ("exit".equals(id)) {
             activity.finish();
+        } else {
+            if (mICordovaMessage != null) {
+                return mICordovaMessage.onMessage(id, data);
+            }
         }
         return null;
     }
+
 
     @Override
     public ExecutorService getThreadPool() {
@@ -241,4 +252,19 @@ public class CordovaInterfaceImpl implements CordovaInterface {
             return true;
         }
     }
+
+    private ICordovaMessage mICordovaMessage;
+
+
+    public void setCordovaMessage(ICordovaMessage cordovaMessage) {
+        if (cordovaMessage != null) {
+            this.mICordovaMessage = cordovaMessage;
+        }
+    }
+
+    public interface ICordovaMessage {
+        Object onMessage(String id, Object data);
+    }
+
+
 }

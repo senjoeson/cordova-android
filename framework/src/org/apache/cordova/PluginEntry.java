@@ -41,7 +41,7 @@ public final class PluginEntry {
     /**
      * Flag that indicates the plugin object should be created when PluginManager is initialized.
      */
-    public final boolean onload;
+    public final boolean onLoad;
 
     /**
      * Constructs with a CordovaPlugin already instantiated.
@@ -53,16 +53,16 @@ public final class PluginEntry {
     /**
      * @param service     The name of the service
      * @param pluginClass The plugin class name
-     * @param onload      Create plugin object when HTML page is loaded
+     * @param onLoad      Create plugin object when HTML page is loaded
      */
-    public PluginEntry(String service, String pluginClass, boolean onload) {
-        this(service, pluginClass, onload, null);
+    public PluginEntry(String service, String pluginClass, boolean onLoad) {
+        this(service, pluginClass, onLoad, null);
     }
 
-    private PluginEntry(String service, String pluginClass, boolean onload, CordovaPlugin plugin) {
+    private PluginEntry(String service, String pluginClass, boolean onLoad, CordovaPlugin plugin) {
         this.service = service;
         this.pluginClass = pluginClass;
-        this.onload = onload;
+        this.onLoad = onLoad;
         this.plugin = plugin;
     }
 }

@@ -30,13 +30,17 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+/**
+ * 解析配置文件数据
+ */
 public class ConfigXmlParser {
-    private static String TAG = "ConfigXmlParser";
+    private  String TAG = "ConfigXmlParser";
 
     private String launchUrl = "file:///android_asset/www/index.html";
     private CordovaPreferences prefs = new CordovaPreferences();
     private ArrayList<PluginEntry> pluginEntries = new ArrayList<PluginEntry>(20);
-    static ConfigXmlParser parser = new ConfigXmlParser();
+
 
     public CordovaPreferences getPreferences() {
         return prefs;
@@ -66,7 +70,7 @@ public class ConfigXmlParser {
 
     boolean insideFeature = false;
     String service = "", pluginClass = "", paramType = "";
-    boolean onload = false;
+    boolean onLoad = false;
 
     public void parse(XmlPullParser xml) {
         int eventType = -1;
@@ -100,8 +104,8 @@ public class ConfigXmlParser {
                 service = xml.getAttributeValue(null, "value");
             else if (paramType.equals("package") || paramType.equals("android-package"))
                 pluginClass = xml.getAttributeValue(null, "value");
-            else if (paramType.equals("onload"))
-                onload = "true".equals(xml.getAttributeValue(null, "value"));
+            else if (paramType.equals("onLoad"))
+                onLoad = "true".equals(xml.getAttributeValue(null, "value"));
         } else if (strNode.equals("preference")) {
             String name = xml.getAttributeValue(null, "name").toLowerCase(Locale.ENGLISH);
             String value = xml.getAttributeValue(null, "value");
@@ -114,18 +118,22 @@ public class ConfigXmlParser {
         }
     }
 
+
     public void handleEndTag(XmlPullParser xml) {
         String strNode = xml.getName();
         if (strNode.equals("feature")) {
-            pluginEntries.add(new PluginEntry(service, pluginClass, onload));
+            pluginEntries.add(new PluginEntry(service, pluginClass, onLoad));
 
             service = "";
             pluginClass = "";
             insideFeature = false;
-            onload = false;
+            onLoad = false;
         }
     }
 
+    /**
+     *  设置启动页
+     */
     private void setStartUrl(String src) {
         Pattern schemeRegex = Pattern.compile("^[a-z-]+://");
         Matcher matcher = schemeRegex.matcher(src);

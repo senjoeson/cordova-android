@@ -31,7 +31,8 @@ import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CordovaWebViewEngine;
 
 /**
- * Custom WebView subclass that enables us to capture events needed for Cordova.
+ * 自定义WebView
+ *  作用: 设置client
  */
 public class SystemWebView extends WebView implements CordovaWebViewEngine.EngineView {
     private SystemWebViewClient viewClient;
@@ -59,6 +60,18 @@ public class SystemWebView extends WebView implements CordovaWebViewEngine.Engin
             setWebChromeClient(new SystemWebChromeClient(parentEngine));
         }
     }
+
+    void  init(SystemWebViewEngine parentEngine){
+        this.parentEngine = parentEngine;
+        if (this.viewClient == null) {
+            setWebViewClient(new SystemWebViewClient(parentEngine));
+        }
+
+        if (this.chromeClient == null) {
+            setWebChromeClient(new SystemWebChromeClient(parentEngine));
+        }
+    }
+
 
     @Override
     public CordovaWebView getCordovaWebView() {

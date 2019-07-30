@@ -20,13 +20,11 @@
 package org.apache.cordova.engine;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
-import android.os.Build;
 import android.view.View;
 import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
@@ -44,18 +42,16 @@ import org.apache.cordova.LOG;
 import org.apache.cordova.NativeToJsMessageQueue;
 import org.apache.cordova.PluginManager;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 
 /**
- * Glue class between CordovaWebView (main Cordova logic) and SystemWebView (the actual View).
- * We make the Engine separate from the actual View so that:
- * A) We don't need to worry about WebView methods clashing with CordovaWebViewEngine methods
- * (e.g.: goBack() is void for WebView, and boolean for CordovaWebViewEngine)
- * B) Separating the actual View from the Engine makes API surfaces smaller.
- * Class uses two-phase initialization. However, CordovaWebView is responsible for calling .init().
- */
+   * 摘自谷歌翻译:
+   * CordovaWebView（主Cordova逻辑）和SystemWebView（实际视图）之间的胶水类。
+   *    我们将引擎与实际视图分开，以便：
+   * A）我们不需要担心与CordovaWebViewEngine方法冲突的WebView方法
+   *（例如：goBack（）对于WebView是无效的，而对于CordovaWebViewEngine则是布尔值）
+   * B）将实际视图与引擎分开使API表面更小。
+   * Class使用两阶段初始化。 但是，CordovaWebView负责调用.init（）。
+  */
 public class SystemWebViewEngine implements CordovaWebViewEngine {
     public static final String TAG = "SystemWebViewEngine";
 
@@ -211,6 +207,7 @@ public class SystemWebViewEngine implements CordovaWebViewEngine {
         // End CB-3360
 
         IntentFilter intentFilter = new IntentFilter();
+
         intentFilter.addAction(Intent.ACTION_CONFIGURATION_CHANGED);
         if (this.receiver == null) {
             this.receiver = new BroadcastReceiver() {

@@ -25,9 +25,10 @@ import org.json.JSONException;
 import java.util.Arrays;
 
 /**
- * This class provides reflective methods for permission requesting and checking so that plugins
- * written for cordova-android 5.0.0+ can still compile with earlier cordova-android versions.
- */
+ *  权限申请
+   *此类提供了权限请求和检查的反射方法，以便插件
+   *为cordova-android 5.0.0+编写仍然可以使用早期的cordova-android版本编译。
+  */
 public class PermissionHelper {
     private static final String LOG_TAG = "CordovaPermissionHelper";
 

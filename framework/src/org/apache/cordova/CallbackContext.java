@@ -19,11 +19,11 @@
 package org.apache.cordova;
 
 import org.json.JSONArray;
-
-import org.apache.cordova.CordovaWebView;
-import org.apache.cordova.PluginResult;
 import org.json.JSONObject;
 
+/**
+ * 处理事件回调
+ */
 public class CallbackContext {
     private static final String LOG_TAG = "CordovaPlugin";
 

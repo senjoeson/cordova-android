@@ -20,16 +20,16 @@ package org.apache.cordova;
 
 import android.annotation.SuppressLint;
 
-import java.security.SecureRandom;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.security.SecureRandom;
+
 /**
- * Contains APIs that the JS can call. All functions in here should also have
- * an equivalent entry in CordovaChromeClient.java, and be added to
- * cordova-js/lib/android/plugin/android/promptbasednativeapi.js
- */
+   *包含JS可以调用的API。 这里的所有功能也应该有
+   * CordovaChromeClient.java中的等效条目，并添加到
+   * cordova -js / lib / android / plugin / android / promptbasednativeapi.js
+  */
 public class CordovaBridge {
     private static final String LOG_TAG = "CordovaBridge";
     private PluginManager pluginManager;

@@ -18,12 +18,15 @@
 */
 package org.apache.cordova;
 
+import android.util.Base64;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Base64;
-
+/**
+ * 处理交互时的参数
+ */
 public class CordovaArgs {
     private JSONArray baseArgs;
 

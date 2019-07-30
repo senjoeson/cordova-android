@@ -22,10 +22,10 @@ import android.util.Pair;
 import android.util.SparseArray;
 
 /**
- * Provides a collection that maps unique request codes to CordovaPlugins and Integers.
- * Used to ensure that when plugins make requests for runtime permissions, those requests do not
- * collide with requests from other plugins that use the same request code value.
- */
+   *提供将唯一请求代码映射到CordovaPlugins和Integers的集合。
+   *用于确保当插件发出运行时权限请求时，这些请求不会
+   *与使用相同请求代码值的其他插件的请求冲突。
+  */
 public class CallbackMap {
     private int currentCallbackId = 0;
     private SparseArray<Pair<CordovaPlugin, Integer>> callbacks;

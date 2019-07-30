@@ -18,12 +18,10 @@
 */
 package org.apache.cordova.engine;
 
-import java.util.Arrays;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Context;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -34,11 +32,11 @@ import android.webkit.ConsoleMessage;
 import android.webkit.GeolocationPermissions.Callback;
 import android.webkit.JsPromptResult;
 import android.webkit.JsResult;
+import android.webkit.PermissionRequest;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebStorage;
 import android.webkit.WebView;
-import android.webkit.PermissionRequest;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -47,15 +45,17 @@ import org.apache.cordova.CordovaDialogsHelper;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.LOG;
 
+import java.util.Arrays;
+
 /**
- * This class is the WebChromeClient that implements callbacks for our web view.
- * The kind of callbacks that happen here are on the chrome outside the document,
- * such as onCreateWindow(), onConsoleMessage(), onProgressChanged(), etc. Related
- * to but different than CordovaWebViewClient.
- */
+   *此类是WebChromeClient，它实现Web视图的回调。
+   *此处发生的回调类型位于文档外部的chrome上，
+   *例如onCreateWindow（），onConsoleMessage（），onProgressChanged（）等。
+   *但与CordovaWebViewClient不同。
+  */
 public class SystemWebChromeClient extends WebChromeClient {
 
-    private static final int FILECHOOSER_RESULTCODE = 5173;
+    private static final int FILE_CHOOSER_RESULT_CODE = 5173;
     private static final String LOG_TAG = "SystemWebChromeClient";
     private long MAX_QUOTA = 100 * 1024 * 1024;
     protected final SystemWebViewEngine parentEngine;
@@ -242,7 +242,7 @@ public class SystemWebChromeClient extends WebChromeClient {
                 LOG.d(LOG_TAG, "Receive file chooser URL: " + result);
                 uploadMsg.onReceiveValue(result);
             }
-        }, intent, FILECHOOSER_RESULTCODE);
+        }, intent, FILE_CHOOSER_RESULT_CODE);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -257,7 +257,7 @@ public class SystemWebChromeClient extends WebChromeClient {
                     LOG.d(LOG_TAG, "Receive file chooser URL: " + result);
                     filePathsCallback.onReceiveValue(result);
                 }
-            }, intent, FILECHOOSER_RESULTCODE);
+            }, intent, FILE_CHOOSER_RESULT_CODE);
         } catch (ActivityNotFoundException e) {
             LOG.w("No activity found to handle file chooser intent.", e);
             filePathsCallback.onReceiveValue(null);

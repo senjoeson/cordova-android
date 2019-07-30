@@ -23,6 +23,7 @@ import java.util.LinkedList;
 
 /**
  * Holds the list of messages to be sent to the WebView.
+ * 原生发送JS的消息队列
  */
 public class NativeToJsMessageQueue {
     private static final String LOG_TAG = "JsMessageQueue";
